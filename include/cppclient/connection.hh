@@ -17,9 +17,16 @@ class Connection
   ~Connection();
   Response get(std::string);
   Response post(std::string, std::string);
+  Response del(std::string, std::string);
 
   private:
   CURL* handler;
+  std::string body;
+  std::string header;
+  long http_code;
+
+  void set_default_callback();
+  void set_url(std::string);
 
 };
 }

@@ -36,6 +36,7 @@ class Response
     CURLcode curlcode;
     long returncode;
 
+
 };
 }
 
