@@ -1,7 +1,5 @@
 #include "cppclient/connection.hh"
 
-#include <unistd.h>
-
 namespace cppclient
 {
 Connection::Connection()
