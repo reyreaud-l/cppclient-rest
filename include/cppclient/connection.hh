@@ -18,6 +18,7 @@ class Connection
   Response get(std::string);
   Response post(std::string, std::string);
   Response del(std::string, std::string);
+  Response patch(std::string, std::string);
 
   private:
   CURL* handler;

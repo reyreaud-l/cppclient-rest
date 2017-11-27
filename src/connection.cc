@@ -50,6 +50,18 @@ Response Connection::del(std::string url, std::string postfields)
   return Response(body, header, success, http_code);
 }
 
+Response Connection::patch(std::string url, std::string postfields)
+{
+  set_url(url);
+  set_default_callback();
+  curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PATCH");
+  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, postfields.c_str());
+
+  CURLcode success = curl_easy_perform(handler);
+  curl_easy_getinfo(handler, CURLINFO_RESPONSE_CODE, &http_code);
+  return Response(body, header, success, http_code);
+}
+
 void Connection::set_url(std::string url)
 {
   curl_easy_setopt(handler, CURLOPT_URL, url.c_str());
