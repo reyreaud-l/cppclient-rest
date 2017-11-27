@@ -3,6 +3,8 @@
 #include <string>
 #include <curl/curl.h>
 #include <iostream>
+#include <cstdio>
+#include <sys/stat.h>
 
 #include "cppclient/response.hh"
 #include "cppclient/helper.hh"
@@ -19,6 +21,7 @@ class Connection
   Response post(std::string, std::string);
   Response del(std::string, std::string);
   Response patch(std::string, std::string);
+  Response put(std::string, std::string);
 
   private:
   CURL* handler;

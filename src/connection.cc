@@ -38,6 +38,28 @@ Response Connection::post(std::string url, std::string postfields)
   return Response(body, header, success, http_code);
 }
 
+Response Connection::put(std::string url, std::string file)
+{
+  struct stat file_info;
+
+  stat(file.c_str(), &file_info);
+  FILE* file_ptr = std::fopen(file.c_str(), "rb");
+
+  set_url(url);
+  set_default_callback();
+  curl_easy_setopt(handler, CURLOPT_UPLOAD, 1L); 
+  curl_easy_setopt(handler, CURLOPT_PUT, 1L); 
+  // Set file to upload and indicate it's size
+  curl_easy_setopt(handler, CURLOPT_READDATA, file_ptr);
+  curl_easy_setopt(handler, CURLOPT_INFILESIZE_LARGE, (curl_off_t)file_info.st_size);
+
+  CURLcode success = curl_easy_perform(handler);
+  curl_easy_getinfo(handler, CURLINFO_RESPONSE_CODE, &http_code);
+
+  std::fclose(file_ptr);
+  return Response(body, header, success, http_code);
+}
+
 Response Connection::del(std::string url, std::string postfields)
 {
   set_url(url);
