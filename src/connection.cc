@@ -1,5 +1,7 @@
 #include "cppclient/connection.hh"
 
+#include <unistd.h>
+
 namespace cppclient
 {
 Connection::Connection()
@@ -45,8 +47,9 @@ Response Connection::put(std::string url, std::string file)
   purge_content();
   struct stat file_info;
 
+  // TODO: Add error checking
   stat(file.c_str(), &file_info);
-  FILE* file_ptr = std::fopen(file.c_str(), "rb");
+  FILE* file_ptr = std::fopen(file.c_str(), "r");
 
   set_url(url);
   set_default_callback();

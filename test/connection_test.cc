@@ -39,7 +39,7 @@ TEST_CASE("Check basic connection function", "[connection]")
 
   SECTION("PUT")
   {
-    auto resp = myconnec.put(std::string("localhost:8000"), std::string("./testfile.txt"));
+    auto resp = myconnec.put(std::string("localhost:8000"), std::string("../../test/testfile.txt"));
     REQUIRE(resp.get_body() == "put_success");
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);

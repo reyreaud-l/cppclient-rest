@@ -1,0 +1,16 @@
+workspace:
+  base: /cpp
+
+pipeline:
+  build:
+    image: madduci/docker-ubuntu-cpp
+    commands:
+      - apt-get -yy -qq -o=Dpkg::Use-Pty=0 install libcurl4-openssl-dev cmake
+      - mkdir ./build && cd ./build && cmake .. && make
+
+  test:
+    image: madduci/docker-ubuntu-cpp
+    commands:
+      - apt-get -yy -qq -o=Dpkg::Use-Pty=0 install libcurl4-openssl-dev python
+      - cd test && python server.py 8000 5 &
+      - cd ./build && make check
