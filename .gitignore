@@ -1,6 +1,9 @@
 # cmake
 build/
 
+# tests
+logfile.txt
+
 # Prerequisites
 *.d
 

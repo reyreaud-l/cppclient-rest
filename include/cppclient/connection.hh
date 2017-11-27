@@ -31,6 +31,7 @@ class Connection
 
   void set_default_callback();
   void set_url(std::string);
+  void purge_content();
 
 };
 }

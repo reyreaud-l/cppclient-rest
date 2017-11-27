@@ -19,6 +19,7 @@ Connection::~Connection()
 
 Response Connection::get(std::string url)
 {
+  purge_content();
   set_url(url);
   set_default_callback();
 
@@ -29,6 +30,7 @@ Response Connection::get(std::string url)
 
 Response Connection::post(std::string url, std::string postfields)
 {
+  purge_content();
   set_url(url);
   set_default_callback();
   curl_easy_setopt(handler, CURLOPT_POSTFIELDS, postfields.c_str());
@@ -40,6 +42,7 @@ Response Connection::post(std::string url, std::string postfields)
 
 Response Connection::put(std::string url, std::string file)
 {
+  purge_content();
   struct stat file_info;
 
   stat(file.c_str(), &file_info);
@@ -47,8 +50,8 @@ Response Connection::put(std::string url, std::string file)
 
   set_url(url);
   set_default_callback();
+  curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PUT");
   curl_easy_setopt(handler, CURLOPT_UPLOAD, 1L); 
-  curl_easy_setopt(handler, CURLOPT_PUT, 1L); 
   // Set file to upload and indicate it's size
   curl_easy_setopt(handler, CURLOPT_READDATA, file_ptr);
   curl_easy_setopt(handler, CURLOPT_INFILESIZE_LARGE, (curl_off_t)file_info.st_size);
@@ -62,6 +65,7 @@ Response Connection::put(std::string url, std::string file)
 
 Response Connection::del(std::string url, std::string postfields)
 {
+  purge_content();
   set_url(url);
   set_default_callback();
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -74,6 +78,7 @@ Response Connection::del(std::string url, std::string postfields)
 
 Response Connection::patch(std::string url, std::string postfields)
 {
+  purge_content();
   set_url(url);
   set_default_callback();
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PATCH");
@@ -82,6 +87,13 @@ Response Connection::patch(std::string url, std::string postfields)
   CURLcode success = curl_easy_perform(handler);
   curl_easy_getinfo(handler, CURLINFO_RESPONSE_CODE, &http_code);
   return Response(body, header, success, http_code);
+}
+
+void Connection::purge_content()
+{
+  http_code = 0;
+  body = "";
+  header = "";
 }
 
 void Connection::set_url(std::string url)
