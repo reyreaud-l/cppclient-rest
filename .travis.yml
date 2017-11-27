@@ -1,0 +1,19 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+
+install:
+  - sudo apt-get install cmake
+
+build:
+  - mkdir build
+  - cd build && cmake ..
+  - make
+
+before_script:
+  - cd test && ./server.py 8000 5 &
+script:
+  - cd build && make check
+after_script:
+  - cd test && cat logfile.txt
