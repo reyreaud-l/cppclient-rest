@@ -1,47 +1,50 @@
 #define CATCH_CONFIG_MAIN
+#include <cstdio>
+#include <string>
 #include "catch.hpp"
-#include "cppclient/connection.hh"
+#include "cppclient/cppclient.hh"
 
 TEST_CASE("Check basic connection function", "[connection]")
 {
+  cppclient::init();
   cppclient::Connection myconnec;
+  myconnec.enable_json();
+  std::string base("http://httpbin.org");
   SECTION("GET")
   {
-    auto resp = myconnec.get(std::string("localhost:8000"));
-    REQUIRE(resp.get_body() == "get_success");
+    auto resp = myconnec.get(base + "/get");
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
   }
 
   SECTION("POST")
   {
-    auto resp = myconnec.post(std::string("localhost:8000"), std::string(""));
-    REQUIRE(resp.get_body() == "post_success");
+    auto resp = myconnec.post(base + "/post", escape_json(std::string("{\"key\" : \"value\"}")));
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
   }
 
   SECTION("DELETE")
   {
-    auto resp = myconnec.del(std::string("localhost:8000"), std::string(""));
-    REQUIRE(resp.get_body() == "delete_success");
+    auto resp = myconnec.del(base + "/delete", std::string("{\"key\": \"value\""));
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
   }
 
   SECTION("PATCH")
   {
-    auto resp = myconnec.patch(std::string("localhost:8000"), std::string(""));
-    REQUIRE(resp.get_body() == "patch_success");
+    auto resp = myconnec.patch(base + "/patch", std::string("{\\\"key\\\": value"));
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
   }
 
   SECTION("PUT")
   {
-    auto resp = myconnec.put(std::string("localhost:8000"), std::string("../../test/testfile.txt"));
-    REQUIRE(resp.get_body() == "put_success");
+    FILE* file = fopen("../../test/testfile.txt", "r");
+    auto resp = myconnec.put(base + "/put", file);
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
+    fclose(file);
   }
+  cppclient::cleanup();
 }
