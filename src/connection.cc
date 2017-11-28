@@ -85,7 +85,7 @@ void Connection::add_header(const std::string head)
   generate_headers();
 }
 
-void Connection::enable_json()
+void Connection::add_json_headers()
 {
   headers.insert("Accept: application/json");
   headers.insert("Content-Type: application/json");
@@ -126,6 +126,11 @@ void Connection::purge_content()
   header = "";
 }
 
+void Connection::purge_headers()
+{
+  headers.clear();
+}
+
 void Connection::reset()
 {
   curl_easy_reset(handler);
@@ -143,5 +148,4 @@ void Connection::set_default_callback()
   curl_easy_setopt(handler, CURLOPT_WRITEDATA, &body);
   curl_easy_setopt(handler, CURLOPT_HEADERDATA, &header);
 }
-
 }

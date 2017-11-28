@@ -27,7 +27,7 @@ class Connection
   void auth(std::string, std::string);
 
   void add_header(const std::string head);
-  void enable_json();
+  void add_json_headers();
 
   private:
   CURL* handler;
@@ -42,6 +42,7 @@ class Connection
   void set_default_callback();
   void set_url(std::string);
   void purge_content();
+  void purge_headers();
 
 };
 }
