@@ -113,7 +113,7 @@ void Connection::auth_username(std::string username)
   curl_easy_setopt(handler, CURLOPT_USERNAME, username.c_str());
 }
 
-void Connection::set_auth(std::string username, std::string password)
+void Connection::auth(std::string username, std::string password)
 {
   auth_password(password);
   auth_username(username);

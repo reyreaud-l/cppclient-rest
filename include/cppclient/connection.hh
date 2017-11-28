@@ -24,7 +24,7 @@ class Connection
 
   void auth_password(std::string);
   void auth_username(std::string);
-  void set_auth(std::string, std::string);
+  void auth(std::string, std::string);
 
   void add_header(const std::string head);
   void enable_json();
