@@ -5,9 +5,9 @@ compiler:
 
 install:
   - sudo apt-get install cmake
-  - mkdir build
-  - cd build && cmake ..
+  - mkdir ./build
+  - cd ./build && cmake ..
   - make
 
 script:
-  - cd build && make check
+  - make check
