@@ -1,0 +1,7 @@
+PROJECT_NAME            = @PROJECT@
+OUTPUT_LANGUAGE         = ENGLISH
+OUTPUT_DIRECTORY        = @CMAKE_CURRENT_BINARY_DIR@/
+INPUT                   = @CMAKE_CURRENT_SOURCE_DIR@/../src/ @CMAKE_CURRENT_SOURCE_DIR@/../include/
+EXTRACT_ALL             = YES
+RECURSIVE               = YES
+FILE_PATTERNS           = *.cc *.hh

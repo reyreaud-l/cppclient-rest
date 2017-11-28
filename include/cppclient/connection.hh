@@ -10,6 +10,17 @@
 
 namespace cppclient
 {
+/** class Connection
+ *  brief Represent a connection using a single curl handler. Should not be shared between threads.
+ *  details The class uses a single curl handler and keep state of the last request made
+ *          using the handler. Due to libcurl handler not being thread safe, an instance
+ *          of this class should not be shared between threads.
+ *
+ *  \todo Add overloading on basic method get/post/...
+ *       Check that connection free the resouces used by libcurl
+ *
+ *
+ */
 class Connection
 {
   public:
