@@ -34,7 +34,7 @@ class Connection
   std::string body;
   std::string header;
   long http_code;
-  std::set<const std::string> headers;
+  std::set<std::string> headers;
 
   Response curl_perform();
 

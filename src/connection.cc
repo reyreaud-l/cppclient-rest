@@ -17,7 +17,6 @@ Connection::~Connection()
   curl_easy_cleanup(handler);
 }
 
-
 Response Connection::get(std::string url)
 {
   purge_content();
