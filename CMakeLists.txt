@@ -11,3 +11,6 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/test)
+
+install(DIRECTORY include/cppclient DESTINATION /usr/local/include)
+install(FILES  DESTINATION lib)
