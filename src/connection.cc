@@ -5,11 +5,8 @@ namespace cppclient
 Connection::Connection()
 {
   handler = curl_easy_init();
-  //curl_easy_setopt(handler, CURLOPT_VERBOSE, 1L);
   if (!handler)
-  {
     std::cerr << "Failed to curl easy init\n";
-  }
 }
 
 Connection::~Connection()
@@ -26,12 +23,12 @@ Response Connection::get(std::string url)
   return curl_perform();
 }
 
-Response Connection::post(std::string url, std::string postfields)
+Response Connection::post(std::string url, std::string data)
 {
   purge_content();
   set_url(url);
   set_default_callback();
-  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, postfields.c_str());
+  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, data.c_str());
 
   return curl_perform();
 }
@@ -51,27 +48,34 @@ Response Connection::put(std::string url, FILE* file)
   return curl_perform();
 }
 
-Response Connection::del(std::string url, std::string postfields)
+Response Connection::del(std::string url, std::string data)
 {
   purge_content();
   set_url(url);
   set_default_callback();
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "DELETE");
-  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, postfields.c_str());
+  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, data.c_str());
 
   return curl_perform();
 }
 
-Response Connection::patch(std::string url, std::string postfields)
+Response Connection::patch(std::string url, std::string data)
 {
   purge_content();
   set_url(url);
   set_default_callback();
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PATCH");
-  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, postfields.c_str());
+  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, data.c_str());
   return curl_perform();
 }
 
+/** @details Make the curl_easy_perform call and uses body, header, http_code attributes
+ *           to create a Response object corresponding. http_code is obtained with
+ *           curl_easy_getinfo.
+ *
+ *  @todo    Check CURLcode ourselves and either raise an exception or create and according
+ *           response with an explicit error message.
+ */
 Response Connection::curl_perform()
 {
   CURLcode success = curl_easy_perform(handler);
@@ -79,12 +83,15 @@ Response Connection::curl_perform()
   return Response(body, header, success, http_code);
 }
 
-void Connection::add_header(const std::string head)
+void Connection::add_header(const std::string header)
 {
-  headers.insert(head);
+  headers.insert(header);
   generate_headers();
 }
 
+/** @details The headers are needed to use json, otherwise libcurl will consider the data
+ *           sent to be the key to "" like { data : "" }
+ */
 void Connection::add_json_headers()
 {
   headers.insert("Accept: application/json");
@@ -93,9 +100,9 @@ void Connection::add_json_headers()
   generate_headers();
 }
 
-void Connection::set_timeout(unsigned int time)
+void Connection::set_timeout(unsigned int timeout)
 {
-  curl_easy_setopt(handler, CURLOPT_TIMEOUT, time);
+  curl_easy_setopt(handler, CURLOPT_TIMEOUT, timeout);
 }
 
 void Connection::set_redirects(unsigned int redirs)
@@ -147,6 +154,10 @@ void Connection::set_url(std::string url)
   curl_easy_setopt(handler, CURLOPT_URL, url.c_str());
 }
 
+/** @details Set the callback CURLOPT_WRITEFUNCTION and CURLOPT_HEADERFUNCTION to
+ *           curl_string_callback. Set body and header attributes to receive the
+ *           corresponding data from libcurl.
+ */
 void Connection::set_default_callback()
 {
   curl_easy_setopt(handler, CURLOPT_WRITEFUNCTION, curl_string_callback);
