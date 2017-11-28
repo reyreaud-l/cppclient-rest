@@ -9,14 +9,14 @@
 
 namespace cppclient
 {
-static void init()
+static inline void init()
 {
   auto code = curl_global_init(CURL_GLOBAL_ALL);
   if (code != CURLE_OK)
     throw std::runtime_error("Could not initialize curl");
 }
 
-static void cleanup()
+static inline void cleanup()
 {
   curl_global_cleanup();
 }

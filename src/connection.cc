@@ -93,6 +93,16 @@ void Connection::add_json_headers()
   generate_headers();
 }
 
+void Connection::set_timeout(unsigned int time)
+{
+  curl_easy_setopt(handler, CURLOPT_TIMEOUT, time);
+}
+
+void Connection::set_redirects(unsigned int redirs)
+{
+  curl_easy_setopt(handler, CURLOPT_FOLLOWLOCATION, redirs);
+}
+
 void Connection::generate_headers()
 {
   struct curl_slist *curlheaders = NULL;
@@ -126,14 +136,10 @@ void Connection::purge_content()
   header = "";
 }
 
-void Connection::purge_headers()
-{
-  headers.clear();
-}
-
 void Connection::reset()
 {
   curl_easy_reset(handler);
+  headers.clear();
 }
 
 void Connection::set_url(std::string url)

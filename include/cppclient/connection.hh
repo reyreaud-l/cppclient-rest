@@ -29,6 +29,9 @@ class Connection
   void add_header(const std::string head);
   void add_json_headers();
 
+  void set_timeout(unsigned int);
+  void set_redirects(unsigned int);
+
   private:
   CURL* handler;
   std::string body;
@@ -42,7 +45,6 @@ class Connection
   void set_default_callback();
   void set_url(std::string);
   void purge_content();
-  void purge_headers();
 
 };
 }

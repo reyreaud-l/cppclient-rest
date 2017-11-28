@@ -1,6 +1,7 @@
 add_executable(${PROJECT}_check
   connection_test.cc
   auth_test.cc
+  listener.cc
 )
 
 target_include_directories(${PROJECT}_check PUBLIC ${CMAKE_SOURCE_DIR}/extern)
