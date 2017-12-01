@@ -8,10 +8,10 @@ install:
   - mkdir ./build
   - cd ./build && cmake ..
   - make
-  - make install
+  - sudo make install
 
 script:
   - make test
 
 after_script:
-  - make uninstall
+  - sudo make uninstall

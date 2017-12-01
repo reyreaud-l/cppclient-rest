@@ -25,8 +25,13 @@ No package yet, clone the source and build
 $ git clone git@github.com:reyreaud-l/cppclient-rest.git
 $ cd cppclient-rest
 $ mkdir build && cd build
-$ cmake ..
+$ cmake .. # For custom install dir: cmake -DCMAKE_INSTALL_PREFIX=/my/path ..
 $ make && make install
+```
+
+To uninstall
+```
+$ make uninstall
 ```
 
 Usage

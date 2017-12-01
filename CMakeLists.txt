@@ -16,8 +16,8 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/doc)
 enable_testing()
 add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
-install(DIRECTORY include/cppclient DESTINATION /usr/local/include)
-install(FILES extern/mandatory/json.hpp DESTINATION /usr/local/include)
+install(DIRECTORY include/cppclient DESTINATION include)
+install(FILES extern/mandatory/json.hpp DESTINATION include)
 
 # uninstall target
 if(NOT TARGET uninstall)
