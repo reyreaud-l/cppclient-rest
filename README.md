@@ -50,33 +50,19 @@ int main(void)
 Here are some basics:
 ```c++
 conn.get("url");
-// The payload can be json if add_json_headers is called
-conn.post("url", "payload");
+conn.post("url", "payload"); // The payload can be json if add_json_headers is called
 conn.delete("url", "payload");
 conn.patch("url", "payload");
-// myfile is a FILE*
-conn.put("url", myfile);
+conn.put("url", myfile); // myfile is a FILE*
 
-// Set username for basic HTTP Auth
-conn.auth_password("password");
+conn.auth_password("password"); // Set username for basic HTTP Auth
+conn.auth_username("username"); // Set password for basic HTTP Auth
+conn.auth("username", "password"); // Or set both at the same time
 
-// Set password for basic HTTP Auth
-conn.auth_username("username");
-
-// Or set both at the same time
-conn.auth("username", "password");
-
-// Add an arbitraty header to be sent allong side the requests
-conn.add_header("myheader");
-
-// Set a timeout for the requests
-conn.set_timeout(5);
-
-// Set max number of redirects to follow
-conn.set_redirects(5);
-
-// Get a connection clean it's state and underlying handler
-conn.reset();
+conn.add_header("myheader"); // Add an arbitraty header to be sent allong side the requests
+conn.set_timeout(5); // Set a timeout for the requests
+conn.set_redirects(5); // Set max number of redirects to follow
+conn.reset(); // Get a connection clean it's state and underlying handler
 
 
 // Return either body, header or code of the response
