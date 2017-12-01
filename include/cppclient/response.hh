@@ -3,8 +3,11 @@
 #include <string>
 #include <curl/curl.h>
 
+#include "json.hpp"
+
 namespace cppclient
 {
+using json = nlohmann::json;
 /** @class Response
  *  @brief Represent a response from a request.
  */
@@ -18,6 +21,13 @@ class Response
     std::string inline get_body()
     {
       return this->body;
+    }
+
+    /** @brief Return the body of the response as a json object
+     */
+    json inline get_body_json()
+    {
+      return json::parse(body);
     }
 
     /** @brief Return the header of the response
@@ -43,7 +53,7 @@ class Response
       return this->returncode;
     }
 
-  private:
+  protected:
     std::string body;
     std::string header;
     CURLcode curlcode;

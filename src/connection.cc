@@ -33,6 +33,16 @@ Response Connection::post(std::string url, std::string data)
   return curl_perform();
 }
 
+Response Connection::post(std::string url, json data)
+{
+  purge_content();
+  set_url(url);
+  set_default_callback();
+  curl_easy_setopt(handler, CURLOPT_POSTFIELDS, data.dump().c_str());
+
+  return curl_perform();
+}
+
 Response Connection::put(std::string url, FILE* file)
 {
   purge_content();
@@ -73,8 +83,6 @@ Response Connection::patch(std::string url, std::string data)
  *           to create a Response object corresponding. http_code is obtained with
  *           curl_easy_getinfo.
  *
- *  @todo    Check CURLcode ourselves and either raise an exception or create and according
- *           response with an explicit error message.
  */
 Response Connection::curl_perform()
 {

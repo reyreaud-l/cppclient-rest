@@ -10,5 +10,4 @@ Response::Response(std::string body, std::string head, CURLcode curlcode, long r
   this->curlcode = curlcode;
   this->returncode = returncode;
 }
-
 }

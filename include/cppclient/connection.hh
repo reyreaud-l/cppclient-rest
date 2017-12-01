@@ -7,9 +7,11 @@
 #include <set>
 
 #include "cppclient/cppclient.hh"
+#include "json.hpp"
 
 namespace cppclient
 {
+using json = nlohmann::json;
 /** @class Connection
  *  @brief Represent a connection using a single curl handler. Should not be shared between threads.
  *  @details The class uses a single curl handler and keep state of the last request made
@@ -46,6 +48,13 @@ class Connection
    *  @return Response object resulting of the http post
    */
   Response post(std::string, std::string);
+
+  /** @brief Perform an http post on the given url with a json payload
+   *  @param url
+   *  @param json data
+   *  @return Response object resulting of the http post
+   */
+  Response post(std::string, json);
 
   /** @brief Perform an http delete on the given url
    *  @param url

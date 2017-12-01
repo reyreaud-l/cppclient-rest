@@ -6,9 +6,11 @@
 #include "cppclient/response.hh"
 #include "cppclient/connection.hh"
 #include "cppclient/helper.hh"
+#include "json.hpp"
 
 namespace cppclient
 {
+
 static inline void init()
 {
   auto code = curl_global_init(CURL_GLOBAL_ALL);
