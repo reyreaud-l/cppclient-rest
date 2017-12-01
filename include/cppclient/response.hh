@@ -27,7 +27,8 @@ class Response
      */
     json inline get_body_json()
     {
-      return json::parse(body);
+      parse_jbody();
+      return jbody;
     }
 
     /** @brief Return the header of the response
@@ -53,11 +54,17 @@ class Response
       return this->returncode;
     }
 
+    json operator[](std::string);
+
   protected:
     std::string body;
     std::string header;
     CURLcode curlcode;
     long returncode;
+    bool has_parsed_json;
+    json jbody;
+
+    void parse_jbody();
 
 };
 }

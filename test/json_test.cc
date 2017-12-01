@@ -20,7 +20,7 @@ TEST_CASE("Check basic connection function with json objects", "[connection]")
   SECTION("POST")
   {
     auto resp = connec.post(base + "/post", data);
-    REQUIRE(resp.get_body_json()["data"] == "{\"key\":\"value\"}");
+    REQUIRE(resp["data"] == "{\"key\":\"value\"}");
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
   }

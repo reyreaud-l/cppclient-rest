@@ -11,7 +11,7 @@ install:
   - sudo make install
 
 script:
-  - make test
+  - make check
 
 after_script:
   - sudo make uninstall
