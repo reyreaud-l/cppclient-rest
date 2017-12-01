@@ -14,7 +14,8 @@ unless you need it.
 
 And more to be added !
 
-## Installing
+Installing
+----------
 
 No package yet, clone the source and build
 ```
