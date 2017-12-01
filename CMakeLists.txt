@@ -1,7 +1,4 @@
 cmake_minimum_required(VERSION 3.1.0)
-set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
-
-include(cotire)
 
 set(PROJECT cppclient-rest)
 set(CURL_LIBRARY "-lcurl") 
