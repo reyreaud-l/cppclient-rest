@@ -8,6 +8,10 @@ install:
   - mkdir ./build
   - cd ./build && cmake ..
   - make
+  - make install
 
 script:
   - make test
+
+after_script:
+  - make uninstall
