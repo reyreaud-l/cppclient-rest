@@ -12,4 +12,4 @@ pipeline:
     image: madduci/docker-ubuntu-cpp
     commands:
       - apt-get -qq -yy -o=Dpkg::Use-Pty=0 install libcurl4-openssl-dev
-      - cd ./build && make check
+      - cd ./build && make test

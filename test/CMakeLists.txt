@@ -1,13 +1,18 @@
-add_executable(${PROJECT}_check
-  connection_test.cc
-  auth_test.cc
-  listener.cc
-)
+include_directories(${CMAKE_SOURCE_DIR}/extern/test)
 
-target_include_directories(${PROJECT}_check PUBLIC ${CMAKE_SOURCE_DIR}/extern)
-target_link_libraries(${PROJECT}_check PUBLIC ${PROJECT})
-add_custom_target(check
-  COMMAND $<TARGET_FILE:${PROJECT}_check>
-  DEPENDS ${PROJECT}_check
-  COMMENT "Running tests"
-)
+set(TEST ${PROJECT}_test)
+
+file(GLOB FILES "*_test.cc")
+foreach(file ${FILES})
+  get_filename_component(file_basename ${file} NAME_WE)
+  string(REGEX REPLACE "([^$]+)_test" "test-\\1" testcase ${file_basename})
+
+  add_executable(${testcase} ${file})
+
+
+  target_include_directories(${testcase} PRIVATE ${CMAKE_SOURCE_DIR}/extern/test)
+  target_link_libraries(${testcase} PRIVATE ${PROJECT})
+
+  add_test(NAME "${testcase}_default" COMMAND ${testcase})
+
+endforeach()
