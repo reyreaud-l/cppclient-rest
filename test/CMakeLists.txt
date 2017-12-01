@@ -2,7 +2,8 @@ include_directories(${CMAKE_SOURCE_DIR}/extern/test)
 
 set(TEST ${PROJECT}_test)
 
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} COMMENT "Running tests")
+set(TEST_COMMAND ctest -V)
+add_custom_target(check COMMAND ${TEST_COMMAND} COMMENT "Running tests")
 
 file(GLOB FILES "*_test.cc")
 foreach(file ${FILES})
