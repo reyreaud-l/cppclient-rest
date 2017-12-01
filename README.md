@@ -6,11 +6,11 @@ unless you need it.
 
 ## Features
 
-- [x] Basic Get/Post/Patch/Delete/Put requests
-- [x] Basic HTTP Auth handling
-- [x] Json send/receive
-- [ ] Parsing json in Response.
-- [x] File upload with put requests.
+- Basic Get/Post/Patch/Delete/Put requests
+- Basic HTTP Auth handling
+- Json send/receive
+- Parsing json in Response.
+- File upload with put requests.
 
 And more to be added !
 
@@ -41,3 +41,12 @@ int main(void)
   return 0;
 }
 ```
+
+## Test
+
+We use ctest shipped with cmake to run our tests. Simply run 
+```
+$ make test
+```
+
+in the your build directory

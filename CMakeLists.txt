@@ -17,4 +17,4 @@ enable_testing()
 add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 install(DIRECTORY include/cppclient DESTINATION /usr/local/include)
-install(FILES  DESTINATION lib)
+install(FILES extern/mandatory/json.hpp DESTINATION /usr/local/include)
