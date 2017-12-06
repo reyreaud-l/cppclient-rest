@@ -34,7 +34,7 @@ TEST_CASE("Check basic connection function", "[connection]")
 
   SECTION("PATCH")
   {
-    auto resp = connec.patch(base + "/patch", std::string("{\\\"key\\\": value"));
+    auto resp = connec.patch(base + "/patch", std::string("{\"key\": \"value\""));
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);
   }

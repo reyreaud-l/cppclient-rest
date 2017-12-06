@@ -76,6 +76,8 @@ class Connection
    *  @return Response object resulting of the http put
    */
   Response put(std::string, FILE*);
+  Response put(std::string, std::string);
+  Response put(std::string, json);
 
   /** @brief Set the password in the handler for http basic auth.
    *  @param password

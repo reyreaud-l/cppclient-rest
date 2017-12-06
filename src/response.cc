@@ -8,6 +8,7 @@ Response::Response(std::string body, std::string head, CURLcode curlcode, long r
   this->header = head;
   this->curlcode = curlcode;
   this->returncode = returncode;
+  this->has_parsed_json = false;
 }
 
 void Response::parse_jbody()
