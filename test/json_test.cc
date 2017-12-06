@@ -29,8 +29,8 @@ TEST_CASE("Check basic connection function with json objects", "[connection]")
   SECTION("PUT")
   {
     auto resp = connec.put(base + "/put", std::string("a"));
-    //REQUIRE(resp["data"] == data.dump());
-    //REQUIRE(resp.get_curlcode() == 0);
-    //REQUIRE(resp.get_returncode() == 200);
+    REQUIRE(resp["data"] == data.dump());
+    REQUIRE(resp.get_curlcode() == 0);
+    REQUIRE(resp.get_returncode() == 200);
   }
 }
