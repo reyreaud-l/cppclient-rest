@@ -42,6 +42,7 @@ TEST_CASE("Check basic connection function", "[connection]")
   SECTION("PUT")
   {
     FILE* file = fopen("../../test/testfile.txt", "r");
+    REQUIRE(file != NULL);
     auto resp = connec.put(base + "/put", file);
     REQUIRE(resp.get_curlcode() == 0);
     REQUIRE(resp.get_returncode() == 200);

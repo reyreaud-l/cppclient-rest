@@ -43,7 +43,6 @@ Response Connection::put(std::string url, std::string data)
   purge_content();
   set_url(url);
   set_default_callback();
-  curl_easy_setopt(handler, CURLOPT_WRITEFUNCTION, fwrite);
 
   add_header("Transfer-Encoding: chunked");
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -65,7 +64,6 @@ Response Connection::put(std::string url, FILE* file)
   purge_content();
   set_url(url);
   set_default_callback();
-  curl_easy_setopt(handler, CURLOPT_WRITEFUNCTION, fwrite);
 
   add_header("Transfer-Encoding: chunked");
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PUT");
