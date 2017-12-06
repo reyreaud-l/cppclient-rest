@@ -1,32 +1,41 @@
-#define CATCH_CONFIG_MAIN
+#include <cstdio>
 #include <string>
-#include "catch.hpp"
+#include "gtest/gtest.h"
 #include "cppclient/cppclient.hh"
 
-TEST_CASE("Check auth", "[connection]")
+class ConnectionTest : public ::testing::Test
 {
-  cppclient::init();
+  protected:
+  ConnectionTest()
+  {
+    cppclient::init();
+    connec.add_json_headers();
+    base = "http://httpbin.org";
+  }
+
+  virtual ~ConnectionTest()
+  {
+    cppclient::cleanup();
+  }
+
   cppclient::Connection connec;
-  connec.add_json_headers();
-  std::string base("http://httpbin.org");
+  std::string base;
+};
 
-  SECTION("Valid creds")
-  {
-    connec.auth("user", "passwd");
-    auto resp = connec.get(base + "/basic-auth/user/passwd");
-    REQUIRE(resp.get_body() == "{\n  \"authenticated\": true, \n  \"user\": \"user\"\n}\n");
-    REQUIRE(resp.get_curlcode() == 0);
-    REQUIRE(resp.get_returncode() == 200);
-  }
+TEST_F(ConnectionTest, ValidCreds)
+{
+  connec.auth("user", "passwd");
+  auto resp = connec.get(base + "/basic-auth/user/passwd");
+  EXPECT_EQ(resp.get_body(), "{\n  \"authenticated\": true, \n  \"user\": \"user\"\n}\n");
+  EXPECT_EQ(resp.get_curlcode(), 0);
+  EXPECT_EQ(resp.get_returncode(), 200);
+}
 
-  SECTION("Invalid Creds")
-  {
-    connec.auth("user", "h4ck3r");
-    auto resp = connec.get(base + "/basic-auth/user/passwd");
-    REQUIRE(resp.get_body() == "");
-    REQUIRE(resp.get_curlcode() == 0);
-    REQUIRE(resp.get_returncode() == 401);
-  }
-
-  cppclient::cleanup();
+TEST_F(ConnectionTest, InvalidCreds)
+{
+  connec.auth("user", "h4ack3r");
+  auto resp = connec.get(base + "/basic-auth/user/passwd");
+  EXPECT_EQ(resp.get_body(), "");
+  EXPECT_EQ(resp.get_curlcode(), 0);
+  EXPECT_EQ(resp.get_returncode(), 401);
 }

@@ -7,6 +7,7 @@
 #include "cppclient/connection.hh"
 #include "cppclient/helper.hh"
 #include "json.hpp"
+#define CURL_VERBOSE 1
 
 namespace cppclient
 {

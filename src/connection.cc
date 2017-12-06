@@ -5,6 +5,8 @@ namespace cppclient
 Connection::Connection()
 {
   handler = curl_easy_init();
+  body = "";
+  header = "";
   if (!handler)
     std::cerr << "Failed to curl easy init\n";
 }
