@@ -2,7 +2,8 @@
 
 size_t curl_string_callback(void *contents, size_t size, size_t nmemb, void *s)
 {
-  *(static_cast<std::string*>(s)) += std::string {static_cast<char*>(contents), size * nmemb};
+  auto str = static_cast<std::string*>(s);
+  str->append(static_cast<char*>(contents), size * nmemb);
   return size * nmemb;
 }
 
