@@ -49,7 +49,7 @@ Response Connection::put(std::string url, std::string data)
   add_header("Transfer-Encoding: chunked");
   curl_easy_setopt(handler, CURLOPT_CUSTOMREQUEST, "PUT");
   curl_easy_setopt(handler, CURLOPT_UPLOAD, 1L);
-  curl_easy_setopt(handler, CURLOPT_READFUNCTION, curl_string_callback);
+  curl_easy_setopt(handler, CURLOPT_READFUNCTION, curl_string_read_callback);
   curl_easy_setopt(handler, CURLOPT_READDATA, data.c_str());
   curl_easy_setopt(handler, CURLOPT_INFILESIZE_LARGE, data.length());
 

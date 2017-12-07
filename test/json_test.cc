@@ -17,11 +17,6 @@ class ConnectionTest : public ::testing::Test
     };
   }
 
-  virtual ~ConnectionTest()
-  {
-    cppclient::cleanup();
-  }
-
   cppclient::Connection connec;
   std::string base;
   json data;
@@ -37,7 +32,7 @@ TEST_F(ConnectionTest, JsonPost)
 
 TEST_F(ConnectionTest, JsonPut)
 {
-  auto resp = connec.put(base + "/post", data);
+  auto resp = connec.put(base + "/put", data);
   EXPECT_EQ(resp["data"], data.dump());
   EXPECT_EQ(resp.get_curlcode(), 0);
   EXPECT_EQ(resp.get_returncode(), 200);

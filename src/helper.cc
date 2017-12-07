@@ -1,10 +1,22 @@
 #include "cppclient/helper.hh"
 
+#include <iostream>
+
 size_t curl_string_callback(void *contents, size_t size, size_t nmemb, void *s)
 {
   auto str = static_cast<std::string*>(s);
+  str->reserve(size * nmemb);
   str->append(static_cast<char*>(contents), size * nmemb);
   return size * nmemb;
+}
+
+size_t curl_string_read_callback(void *buffer, size_t size, size_t nmemb, void *s)
+{
+  auto str = static_cast<std::string*>(s);
+  auto buff = static_cast<char*>(buffer);
+  auto ret = str->copy(buff, (size * nmemb) - 1);
+  buff[ret] = '\0';
+  return ret;
 }
 
 size_t file_size(FILE* file)

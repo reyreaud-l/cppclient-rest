@@ -13,11 +13,6 @@ class ConnectionTest : public ::testing::Test
     base = "http://httpbin.org";
   }
 
-  virtual ~ConnectionTest()
-  {
-    cppclient::cleanup();
-  }
-
   cppclient::Connection connec;
   std::string base;
 };
