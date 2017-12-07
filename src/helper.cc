@@ -10,13 +10,9 @@ size_t curl_string_callback(void *contents, size_t size, size_t nmemb, void *s)
   return size * nmemb;
 }
 
-size_t curl_string_read_callback(void *buffer, size_t size, size_t nmemb, void *s)
+size_t curl_string_read_callback(void *buffer, size_t size, size_t nmemb, std::string *s)
 {
-  auto str = static_cast<std::string*>(s);
-  auto buff = static_cast<char*>(buffer);
-  auto ret = str->copy(buff, (size * nmemb) - 1);
-  buff[ret] = '\0';
-  return ret;
+  return s->copy(static_cast<char*>(buffer), size * nmemb);
 }
 
 size_t file_size(FILE* file)

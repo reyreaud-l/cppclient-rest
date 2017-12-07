@@ -1,6 +1,7 @@
 #include <string>
 #include "gtest/gtest.h"
 #include "cppclient/cppclient.hh"
+#include <iostream>
 
 using json = nlohmann::json;
 
