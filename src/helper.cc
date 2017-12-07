@@ -2,11 +2,10 @@
 
 #include <iostream>
 
-size_t curl_string_callback(void *contents, size_t size, size_t nmemb, void *s)
+size_t curl_string_callback(void *contents, size_t size, size_t nmemb, std::string *s)
 {
-  auto str = static_cast<std::string*>(s);
-  str->reserve(size * nmemb);
-  str->append(static_cast<char*>(contents), size * nmemb);
+  s->reserve(size * nmemb);
+  s->replace(s->begin(), s->begin() + (size * nmemb), static_cast<char*>(contents));
   return size * nmemb;
 }
 
