@@ -38,6 +38,7 @@ foreach(file ${FILES})
   target_include_directories(${testcase} PRIVATE ${CMAKE_SOURCE_DIR}/extern/test)
   target_link_libraries(${testcase} PRIVATE ${PROJECT})
   target_link_libraries(${testcase} PRIVATE gtest_main)
+  target_compile_options(${testcase} PRIVATE -std=c++11 -Wall -Wextra -Werror -pedantic)
 
   add_test(NAME "${testcase}_default" COMMAND ${testcase})
   add_dependencies(check "${testcase}")
