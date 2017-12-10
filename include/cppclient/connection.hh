@@ -152,6 +152,14 @@ class Connection
    */
   std::set<std::string> headers;
 
+  /** @brief Libcurl list of headers, kept in the attribute to be freed after use
+   */
+  struct curl_slist *curlheaders;
+
+  /** @brief Free the libcurl list of headers
+   */
+  void free_headers();
+
   /** @brief Perform the request registered in the handler and return a Reponse object
    *         corresponding of the result of the request.
    */

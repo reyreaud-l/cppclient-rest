@@ -7,6 +7,7 @@ Connection::Connection()
   handler = curl_easy_init();
   body = "";
   header = "";
+  curlheaders = NULL;
   if (!handler)
     std::cerr << "Failed to curl easy init\n";
 }
@@ -14,6 +15,7 @@ Connection::Connection()
 Connection::~Connection()
 {
   curl_easy_cleanup(handler);
+  free_headers();
 }
 
 Response Connection::get(std::string url)
@@ -138,10 +140,17 @@ void Connection::set_redirects(unsigned int redirs)
 
 void Connection::generate_headers()
 {
-  struct curl_slist *curlheaders = NULL;
+  free_headers();
   for (auto it = headers.begin(); it != headers.end(); it++)
     curlheaders = curl_slist_append(curlheaders, it->c_str());
   curl_easy_setopt(handler, CURLOPT_HTTPHEADER, curlheaders);
+}
+
+void Connection::free_headers()
+{
+  if (curlheaders)
+    curl_slist_free_all(curlheaders);
+  curlheaders = NULL;
 }
 
 void Connection::auth_password(std::string password)
