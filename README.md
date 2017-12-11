@@ -54,6 +54,7 @@ int main(void)
 
 Here are some basics:
 ```c++
+/* Connection Object */
 conn.get("url");
 conn.post("url", "payload"); // The payload can be json if add_json_headers is called
 conn.delete("url", "payload");
@@ -69,14 +70,17 @@ conn.set_timeout(5); // Set a timeout for the requests
 conn.set_redirects(5); // Set max number of redirects to follow
 conn.reset(); // Get a connection clean it's state and underlying handler
 
+/* Response object */
+response.get_body(); // Return body of the request
+response.get_header(); // Return header of the request
 
-// Return either body, header or code of the response
-response.get_body();
-response.get_header();
-response.get_returncode();
+response.get_json_body(); // Return the body as a json object
+response["data"]; // Return the json under the key "data" in the body of the response
 
-// Return error code from curl, should be 0 unless connection problem
-response.get_curlcode();
+response.is_error(); // Return true if there was an error
+response.get_error(); // Return a string representing the error
+response.get_returncode(); // Return the HTTP code of the request
+response.get_curlcode(); // Return error code from curl, should be 0 unless connection problem
 ```
 
 If you want more insight, build the doxygen doc with
