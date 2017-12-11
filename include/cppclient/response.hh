@@ -39,8 +39,6 @@ class Response
     }
 
     /** @brief Return the curlcode form libcurl
-     *  @todo    Check CURLcode in the Connection and either raise an exception or create
-     *           an according response with an explicit error message.
      */
     CURLcode inline get_curlcode()
     {
@@ -54,14 +52,38 @@ class Response
       return this->returncode;
     }
 
+    /** @brief Return a string representing an error. Will return the http code as a
+     *         string if it is an http error, otherwise curl error as a string
+     *
+     *         If no error the string will be empty string
+     */
+    std::string inline get_error()
+    {
+      return this->errormsg;
+    }
+
+    /** @brief Return true if there was an error during transmission
+     */
+    bool inline is_error()
+    {
+      return this->error;
+    }
+
+    /* @brief Access a field of the response parsed as json
+     */
     json operator[](std::string);
 
   protected:
     std::string body;
     std::string header;
+    std::string errormsg;
+
     CURLcode curlcode;
     long returncode;
+
     bool has_parsed_json;
+    bool error;
+
     json jbody;
 
     void parse_jbody();

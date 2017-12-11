@@ -9,6 +9,18 @@ Response::Response(std::string body, std::string head, CURLcode curlcode, long r
   this->curlcode = curlcode;
   this->returncode = returncode;
   this->has_parsed_json = false;
+
+  if (returncode != 200)
+  {
+    this->error = true;
+    this->errormsg = std::to_string(returncode);
+  }
+
+  if (curlcode != CURLE_OK)
+  {
+    this->error = true;
+    this->errormsg = std::string(curl_easy_strerror(this->curlcode));
+  }
 }
 
 void Response::parse_jbody()
