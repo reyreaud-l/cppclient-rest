@@ -1,5 +1,6 @@
 cppclient-rest
 ==============
+[![Build Status](https://travis-ci.org/reyreaud-l/cppclient-rest.svg?branch=master)](https://travis-ci.org/reyreaud-l/cppclient-rest)
 
 Http client for c++. Depends on libcurl.
 
